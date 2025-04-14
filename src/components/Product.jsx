@@ -30,36 +30,41 @@ function Product() {
     getProducts();
   };
   return (
-    <Container>
-      <Row className="justify-content-md-center">
-        {product.map((v) => {
-          return (
-            <Col md="auto">
-              <Card style={{ width: '18rem' }}>
-                <Card.Img variant="top" src={v.image} height="120px" />
-                <Card.Body>
-                  <Card.Title>{v.title}</Card.Title>
-                  <Card.Text> {v.description.slice(0, 90)}</Card.Text>
-                  <Card.Text> {Math.ceil(v.price * 80)}</Card.Text>
+    <Container className="my-5">
+  <h2 className="text-center mb-4">Our Products</h2>
+  <Row className="g-4 justify-content-center">
+    {product.map((v) => {
+      return (
+        <Col key={v.id} xs={12} sm={6} md={4} lg={3}>
+          <Card className="shadow-sm h-100">
+            <Card.Img variant="top" src={v.image} height="200px" style={{ objectFit: "contain" }} />
+            <Card.Body className="d-flex flex-column">
+              <Card.Title className="text-truncate">{v.title}</Card.Title>
+              <Card.Text className="text-muted small" style={{ flexGrow: 1 }}>
+                {v.description.slice(0, 90)}...
+              </Card.Text>
+              <h5 className="text-primary mb-3">₹ {v.price}</h5>
 
-                  
-                  <Button variant="primary" style={{margin:"0px 5px"}}
-                    onClick={() => deleteProductData(v.id)}>Delete</Button> 
+              <div className="d-flex justify-content-between">
+                <Button variant="danger" size="sm" onClick={() => deleteProductData(v.id)}>
+                  Delete
+                </Button>
+                <Link to={"/UpdateProduct/" + v.id}>
+                  <Button variant="warning" size="sm">Update</Button>
+                </Link>
+              </div>
 
-                    <Link to={"/UpdateProduct/"+v.id}>
-                    <Button>Update</Button>
-                    </Link>
+              <Link to={"/ProductDetails/" + v.id} className="mt-3 btn btn-outline-primary btn-sm w-100">
+                View More
+              </Link>
+            </Card.Body>
+          </Card>
+        </Col>
+      );
+    })}
+  </Row>
+</Container>
 
-                    <Link to={"/ProductDetails/"+v.id}><Card.Text>View More</Card.Text></Link>
-
-                </Card.Body>
-              </Card>
-            </Col>
-          )
-        })}
-
-      </Row>
-    </Container>
   )
 }
 

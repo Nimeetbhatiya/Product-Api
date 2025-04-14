@@ -19,23 +19,35 @@ function ProductDetails() {
         getProduct();
     }, [setProduct]);
   return (
-    <Container>
-        <h1 style={{ textAlign : "center"}}>Product Details</h1>
-      <Row>
-        <Col>
-          <img src={product.image} height={300} />
-        </Col>
-        <Col> 
-        <h3>{product.title}</h3>
-        <p>{product.category}</p>
-        <p>{product.price}</p>
-        <p>{product.description}</p>
-        <button><Link></Link></button>
-        </Col>
-      </Row>
-      <Review productId={prodata.productId}/>
+    <Container className="py-5">
+  <h1 className="text-center mb-5">Product Details</h1>
+  <Row className="align-items-center g-5">
+    <Col md={6} className="text-center">
+      <img 
+        src={product.image} 
+        alt={product.title} 
+        height="300" 
+        className="img-fluid rounded shadow-sm"
+        style={{ objectFit: "contain", maxHeight: "400px" }}
+      />
+    </Col>
+    <Col md={6}>
+      <h3 className="mb-3">{product.title}</h3>
+      <p className="text-muted mb-2">{product.category}</p>
+      <h4 className="text-success mb-4">₹ {product.price}</h4>
+      <p className="lead" style={{ fontSize: "1.1rem" }}>{product.description}</p>
       
-    </Container>
+      <Link to="/" className="btn btn-primary mt-3">
+        Back to Products
+      </Link>
+    </Col>
+  </Row>
+
+  <hr className="my-5" />
+
+  <Review productId={prodata.productId} />
+</Container>
+
   )
 }
 

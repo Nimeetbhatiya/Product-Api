@@ -46,40 +46,80 @@ function Review(props) {
 
   };
   return (
-    <Container>
-      <h2>Reviews</h2>
-      <Row>
-        <Col>
-          <form method="post" onSubmit={(e) => addReview(e)}>
-            {star.map((v, i) => {
-              return <FaStar onMouseOver={() => setActiveStar(i + 1)}
-                style={{ color: activestar > i ? "yellow" : "" }} />
-            })} ||
-            <button  type='button' onClick={() => setActiveStar(-1)}>Reset</button>
-            <br />
-            <textarea name="description" placeholder='Add Comment' onChange={(e) => getInput(e)}></textarea>
-            <br />
-            <Button type="submit">Add Review</Button>
-          </form>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
+    <Container className="my-5 p-4 rounded shadow-sm bg-light">
+  <h2 className="text-center mb-4">Customer Reviews</h2>
 
-          {allReview.map((v, i) => {
-            return (
-              <div>
-                {v.star > 0 && [...Array(v.star)].map((v, i) => {
-                  return <FaStar style={{ color: 'yellow' }} />;
-                })}
-                <p>{v.description}</p>
-              </div>
-            )
-          })}
-        </Col>
-      </Row>
-      <ToastContainer />
-    </Container>
+  <Row className="justify-content-center">
+    <Col md={8}>
+      <form method="post" onSubmit={(e) => addReview(e)} className="mb-4">
+        <div className="mb-3 d-flex align-items-center">
+          {star.map((v, i) => (
+            <FaStar
+              key={i}
+              onMouseOver={() => setActiveStar(i + 1)}
+              style={{ 
+                color: activestar > i ? "#ffc107" : "#e4e5e9", 
+                fontSize: "1.8rem", 
+                cursor: "pointer" 
+              }}
+            />
+          ))}
+          <Button 
+            variant="outline-secondary" 
+            size="sm" 
+            className="ms-3"
+            type="button" 
+            onClick={() => setActiveStar(-1)}
+          >
+            Reset
+          </Button>
+        </div>
+
+        <textarea
+          name="description"
+          placeholder="Write your review..."
+          onChange={(e) => getInput(e)}
+          className="form-control mb-3"
+          rows="3"
+          required
+          style={{ resize: "none" }}
+        ></textarea>
+
+        <Button variant="primary" type="submit" className="w-100">
+          Submit Review
+        </Button>
+      </form>
+    </Col>
+  </Row>
+
+  <hr className="my-5" />
+
+  <Row className="justify-content-center">
+    <Col md={8}>
+      {allReview.length === 0 ? (
+        <p className="text-center text-muted">No reviews yet. Be the first to review!</p>
+      ) : (
+        allReview.map((v, i) => (
+          <div key={i} className="mb-4 p-3 border rounded bg-white shadow-sm">
+            <div className="mb-2">
+              {v.star > 0 &&
+                [...Array(v.star)].map((_, i) => (
+                  <FaStar 
+                    key={i} 
+                    style={{ color: '#ffc107', fontSize: "1.4rem" }} 
+                  />
+                ))}
+            </div>
+            <p style={{ fontSize: "1rem" }}>{v.description}</p>
+          </div>
+        ))
+      )}
+    </Col>
+  </Row>
+
+  <ToastContainer />
+</Container>
+
   )
 }
 
